@@ -1,21 +1,51 @@
-# React + Vite
+## Anime Blog Platform
+- A full-stack blogging platform focused on anime content with advanced features including AI-powered tag suggestions, real-time interactions, and personalized user experiences.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
+- User Authentication: Secure signup/login system with JWT and password hashing
+- Post Management: Create, read, update, and delete blog posts
+- Comments: Add and delete comments on posts|
+- Likes System: Like/unlike posts and view like counts
+- User Profiles: View and update user profiles
 
-Currently, two official plugins are available:
+## Advanced Features
+- AI-Powered Tag Suggestion: Automatically suggests relevant tags for posts using Natural Language Processing (spaCy)
+- Search & Filtering: Search posts by keywords and filter by tags or authors
+- Pagination: Efficient handling of large datasets with paginated results
+- User Content Management: View all posts created by a specific user
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack 
+- Backend 
 
-## Expanding the ESLint configuration
+- Flask: Python web framework for building the API
+- PostgreSQL: Relational database for data storage
+- JWT: For secure authentication
+- spaCy: NLP library for AI-powered tag suggestion
+- Bcrypt: For password hashing
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# anime-blog-react
-# anime-blog-react
-# anime-blog-react
-# anime-blog-react
-# anime-blog-react
-# anime-blog-react
-# anime-blog-react
-# anime-blog-react
-# anime-blog-react
+## Frontend (In progress) 
+- React: Frontend library for building user interfaces
+- Tailwind CSS: Utility-first CSS framework for styling
+- Axios: HTTP client for API requests
+
+## Architecture 
+The application follows a RESTful API architecture with the following components:
+
+- Authentication System: Handles user registration, login, and token validation 
+- Post Routes: Manages blog post CRUD operations
+- Comment System: Handles adding and retrieving comments
+- Likes System: Manages post likes and retrieving like counts
+- User Profiles: Manages user information and profile updates
+
+## Getting Started 
+- Python 3.11
+- PostgreSQL
+- Node.js and npm (for frontend)
+
+## Future Enhancements 
+- Real-time notifications 
+- Rich text editior for posts 
+- Admin panel for content moderation 
+- Analytics Dashboard 
+- Followers System
+- Mobile app intregration
