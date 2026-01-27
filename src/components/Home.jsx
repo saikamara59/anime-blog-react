@@ -8,12 +8,12 @@ const Home = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Anime Scenery GIF Background */}
+      {/* Anime Ocean/Adventure Background */}
       <div
         className="fixed inset-0 bg-cover bg-center bg-no-repeat -z-10"
         style={{
-          backgroundImage: 'url(https://gifdb.com/images/high/peaceful-cafe-anime-scenery-9izzoctw6oao6rz0.gif)',
-          filter: isDark ? 'brightness(0.4) contrast(1.2)' : 'brightness(0.9) contrast(1.1)',
+          backgroundImage: 'url(https://gifdb.com/images/high/aesthetic-anime-blue-sea-waves-mifyhkjxufwyss6a.gif)',
+          filter: isDark ? 'brightness(0.3) contrast(1.3) saturate(1.2)' : 'brightness(0.85) contrast(1.15) saturate(1.1)',
         }}
       />
 

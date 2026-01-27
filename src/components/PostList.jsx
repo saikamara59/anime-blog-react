@@ -4,8 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { postsAPI } from '../services/api';
 import { Heart, MessageCircle, User, Calendar, Tag, Search, TrendingUp } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { useTheme } from '../context/ThemeContext';
 
 const PostList = () => {
+  const { isDark } = useTheme();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -190,33 +192,71 @@ const PostList = () => {
             {posts.map((post, index) => (
               <motion.div
                 key={post.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{
+                  delay: index * 0.08,
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 15
+                }}
+                whileHover={{
+                  y: -8,
+                  scale: 1.03,
+                  transition: { duration: 0.2 }
+                }}
                 className="group"
               >
                 <Link to={`/posts/${post.id}`}>
                   <div className={cn(
-                    "relative bg-white dark:bg-gray-800 p-6 h-full cursor-pointer rounded-2xl border border-gray-200/50 dark:border-gray-700/50",
-                    "shadow-lg hover:shadow-2xl dark:shadow-purple-900/20 dark:hover:shadow-purple-900/40",
-                    "hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300",
-                    "backdrop-blur-sm"
+                    "relative bg-white dark:bg-gray-800 p-6 h-full cursor-pointer rounded-2xl border-2 border-gray-200/50 dark:border-gray-700/50",
+                    "shadow-xl hover:shadow-2xl dark:shadow-blue-900/30 dark:hover:shadow-blue-500/40",
+                    "transition-all duration-300",
+                    "backdrop-blur-md overflow-hidden"
                   )}>
-                    {/* Subtle gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-900/10 dark:to-pink-900/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                    {/* Animated gradient overlay */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-br from-blue-50/60 via-purple-50/40 to-pink-50/60 dark:from-blue-900/20 dark:via-purple-900/15 dark:to-pink-900/20 rounded-2xl pointer-events-none"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+
+                    {/* Animated border glow */}
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl pointer-events-none"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                      style={{
+                        background: 'linear-gradient(45deg, rgba(59, 130, 246, 0.3), rgba(147, 51, 234, 0.3), rgba(236, 72, 153, 0.3))',
+                        filter: 'blur(8px)',
+                        zIndex: -1
+                      }}
+                    />
 
                     {/* Content */}
                     <div className="relative z-10">
                       {/* Header */}
                       <div className="flex items-start justify-between mb-4">
-                        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-2">
+                        <motion.h2
+                          className="text-2xl font-bold text-gray-800 dark:text-gray-100 transition-colors line-clamp-2"
+                          whileHover={{ color: isDark ? '#c084fc' : '#9333ea' }}
+                        >
                           {post.title}
-                        </h2>
-                        <div className="flex-shrink-0 ml-4">
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold shadow-md">
-                            {post.author?.charAt(0).toUpperCase() || '?'}
+                        </motion.h2>
+                        <motion.div
+                          className="flex-shrink-0 ml-4"
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          <div className="relative">
+                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full blur-md opacity-50 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold shadow-lg">
+                              {post.author?.charAt(0).toUpperCase() || '?'}
+                            </div>
                           </div>
-                        </div>
+                        </motion.div>
                       </div>
 
                       {/* Meta Info */}
@@ -258,19 +298,40 @@ const PostList = () => {
 
                       {/* Footer - Engagement */}
                       <div className="flex items-center gap-6 pt-4 border-t border-gray-100 dark:border-gray-700">
-                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors">
-                          <Heart size={18} />
+                        <motion.div
+                          className="flex items-center gap-2 text-gray-600 dark:text-gray-400 cursor-pointer"
+                          whileHover={{ scale: 1.1, color: '#ef4444' }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <motion.div whileHover={{ rotate: [0, -10, 10, -10, 0] }}>
+                            <Heart size={18} />
+                          </motion.div>
                           <span className="text-sm font-medium">Like</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
-                          <MessageCircle size={18} />
+                        </motion.div>
+                        <motion.div
+                          className="flex items-center gap-2 text-gray-600 dark:text-gray-400 cursor-pointer"
+                          whileHover={{ scale: 1.1, color: '#3b82f6' }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <motion.div whileHover={{ rotate: [0, 5, -5, 0] }}>
+                            <MessageCircle size={18} />
+                          </motion.div>
                           <span className="text-sm font-medium">Comment</span>
-                        </div>
-                        <div className="ml-auto">
-                          <span className="text-sm text-purple-600 dark:text-purple-400 font-semibold group-hover:translate-x-1 inline-block transition-transform">
-                            Read more →
+                        </motion.div>
+                        <motion.div
+                          className="ml-auto"
+                          whileHover={{ x: 5 }}
+                        >
+                          <span className="text-sm text-blue-600 dark:text-blue-400 font-semibold inline-flex items-center gap-1">
+                            Read more
+                            <motion.span
+                              animate={{ x: [0, 3, 0] }}
+                              transition={{ duration: 1.5, repeat: Infinity }}
+                            >
+                              →
+                            </motion.span>
                           </span>
-                        </div>
+                        </motion.div>
                       </div>
                     </div>
                   </div>

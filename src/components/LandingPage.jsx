@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
-import { Sparkles, Users, TrendingUp, Zap, ArrowRight } from "lucide-react";
+import { Sparkles, Users , TrendingUp, Zap, ArrowRight } from "lucide-react";
 
 const LandingPage = () => {
     const navigate = useNavigate();
