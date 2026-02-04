@@ -188,7 +188,7 @@ const PostList = () => {
             </Link>
           </motion.div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {posts.map((post, index) => (
               <motion.div
                 key={post.id}
@@ -201,94 +201,86 @@ const PostList = () => {
                   damping: 15
                 }}
                 whileHover={{
-                  y: -8,
-                  scale: 1.03,
-                  transition: { duration: 0.2 }
+                  y: -12,
+                  transition: { duration: 0.3, ease: "easeOut" }
                 }}
                 className="group"
               >
                 <Link to={`/posts/${post.id}`}>
                   <div className={cn(
-                    "relative bg-white dark:bg-gray-800 p-6 h-full cursor-pointer rounded-2xl border-2 border-gray-200/50 dark:border-gray-700/50",
-                    "shadow-xl hover:shadow-2xl dark:shadow-blue-900/30 dark:hover:shadow-blue-500/40",
-                    "transition-all duration-300",
-                    "backdrop-blur-md overflow-hidden"
+                    "relative bg-white dark:bg-gray-800 p-7 h-full cursor-pointer rounded-3xl",
+                    "border border-gray-200 dark:border-gray-700",
+                    "shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_60px_rgb(0,0,0,0.25)]",
+                    "dark:shadow-[0_8px_30px_rgba(147,51,234,0.15)] dark:hover:shadow-[0_20px_60px_rgba(147,51,234,0.3)]",
+                    "transition-all duration-500",
+                    "overflow-hidden",
+                    "backdrop-blur-sm"
                   )}>
-                    {/* Animated gradient overlay */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-blue-50/60 via-purple-50/40 to-pink-50/60 dark:from-blue-900/20 dark:via-purple-900/15 dark:to-pink-900/20 rounded-2xl pointer-events-none"
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    />
+                    {/* Gradient accent bar */}
+                    <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                    {/* Animated border glow */}
+                    {/* Subtle gradient overlay on hover */}
                     <motion.div
-                      className="absolute inset-0 rounded-2xl pointer-events-none"
+                      className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-blue-500/5 dark:from-purple-400/10 dark:via-pink-400/10 dark:to-blue-400/10 rounded-3xl pointer-events-none"
                       initial={{ opacity: 0 }}
                       whileHover={{ opacity: 1 }}
                       transition={{ duration: 0.3 }}
-                      style={{
-                        background: 'linear-gradient(45deg, rgba(59, 130, 246, 0.3), rgba(147, 51, 234, 0.3), rgba(236, 72, 153, 0.3))',
-                        filter: 'blur(8px)',
-                        zIndex: -1
-                      }}
                     />
 
                     {/* Content */}
                     <div className="relative z-10">
-                      {/* Header */}
-                      <div className="flex items-start justify-between mb-4">
-                        <motion.h2
-                          className="text-2xl font-bold text-gray-800 dark:text-gray-100 transition-colors line-clamp-2"
-                          whileHover={{ color: isDark ? '#c084fc' : '#9333ea' }}
-                        >
-                          {post.title}
-                        </motion.h2>
+                      {/* Author Badge */}
+                      <div className="flex items-center gap-3 mb-5">
                         <motion.div
-                          className="flex-shrink-0 ml-4"
+                          className="flex-shrink-0"
                           whileHover={{ scale: 1.1, rotate: 5 }}
                           transition={{ type: "spring", stiffness: 300 }}
                         >
                           <div className="relative">
-                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full blur-md opacity-50 group-hover:opacity-100 transition-opacity" />
-                            <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold shadow-lg">
+                            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-sm opacity-60 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
                               {post.author?.charAt(0).toUpperCase() || '?'}
                             </div>
                           </div>
                         </motion.div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <User size={14} className="text-purple-500 dark:text-purple-400" />
+                            <span className="font-semibold text-gray-800 dark:text-gray-100 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                              {post.author}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                            <Calendar size={12} />
+                            <span>{formatDate(post.created_at)}</span>
+                          </div>
+                        </div>
                       </div>
 
-                      {/* Meta Info */}
-                      <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
-                        <div className="flex items-center gap-1.5">
-                          <User size={16} className="text-purple-500 dark:text-purple-400" />
-                          <span className="font-medium hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-                            {post.author}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <Calendar size={16} className="text-purple-500 dark:text-purple-400" />
-                          <span>{formatDate(post.created_at)}</span>
-                        </div>
-                      </div>
+                      {/* Title */}
+                      <motion.h2
+                        className="text-2xl font-bold text-gray-900 dark:text-white mb-4 line-clamp-2 leading-tight group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300"
+                      >
+                        {post.title}
+                      </motion.h2>
 
                       {/* Content Preview */}
-                      <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-3 leading-relaxed">
-                        {post.content.substring(0, 200)}
-                        {post.content.length > 200 && '...'}
+                      <p className="text-gray-600 dark:text-gray-300 mb-5 line-clamp-3 leading-relaxed text-sm">
+                        {post.content.substring(0, 150)}
+                        {post.content.length > 150 && '...'}
                       </p>
 
                       {/* Tags */}
                       {post.tags && (
-                        <div className="flex items-center gap-2 mb-4 flex-wrap">
+                        <div className="flex items-center gap-2 mb-5 flex-wrap">
                           {post.tags.split(',').slice(0, 3).map((tag, i) => (
                             <motion.span
                               key={i}
                               initial={{ scale: 0 }}
                               animate={{ scale: 1 }}
                               transition={{ delay: 0.1 + i * 0.05 }}
-                              className="px-3 py-1 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/50 dark:to-pink-900/50 text-purple-700 dark:text-purple-300 rounded-full text-xs font-semibold hover:from-purple-200 hover:to-pink-200 dark:hover:from-purple-800/50 dark:hover:to-pink-800/50 transition-all"
+                              whileHover={{ scale: 1.05 }}
+                              className="px-3 py-1.5 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg text-xs font-semibold hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-all border border-purple-200/50 dark:border-purple-700/50"
                             >
                               #{tag.trim()}
                             </motion.span>
@@ -297,40 +289,33 @@ const PostList = () => {
                       )}
 
                       {/* Footer - Engagement */}
-                      <div className="flex items-center gap-6 pt-4 border-t border-gray-100 dark:border-gray-700">
+                      <div className="flex items-center gap-6 pt-5 border-t border-gray-200 dark:border-gray-700">
                         <motion.div
-                          className="flex items-center gap-2 text-gray-600 dark:text-gray-400 cursor-pointer"
-                          whileHover={{ scale: 1.1, color: '#ef4444' }}
+                          className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 cursor-pointer transition-colors"
+                          whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
-                          <motion.div whileHover={{ rotate: [0, -10, 10, -10, 0] }}>
-                            <Heart size={18} />
-                          </motion.div>
+                          <Heart size={18} />
                           <span className="text-sm font-medium">Like</span>
                         </motion.div>
                         <motion.div
-                          className="flex items-center gap-2 text-gray-600 dark:text-gray-400 cursor-pointer"
-                          whileHover={{ scale: 1.1, color: '#3b82f6' }}
+                          className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer transition-colors"
+                          whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
-                          <motion.div whileHover={{ rotate: [0, 5, -5, 0] }}>
-                            <MessageCircle size={18} />
-                          </motion.div>
+                          <MessageCircle size={18} />
                           <span className="text-sm font-medium">Comment</span>
                         </motion.div>
                         <motion.div
-                          className="ml-auto"
-                          whileHover={{ x: 5 }}
+                          className="ml-auto flex items-center gap-1 text-purple-600 dark:text-purple-400 font-semibold text-sm group-hover:gap-2 transition-all"
                         >
-                          <span className="text-sm text-blue-600 dark:text-blue-400 font-semibold inline-flex items-center gap-1">
-                            Read more
-                            <motion.span
-                              animate={{ x: [0, 3, 0] }}
-                              transition={{ duration: 1.5, repeat: Infinity }}
-                            >
-                              →
-                            </motion.span>
-                          </span>
+                          Read more
+                          <motion.span
+                            animate={{ x: [0, 3, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                          >
+                            →
+                          </motion.span>
                         </motion.div>
                       </div>
                     </div>

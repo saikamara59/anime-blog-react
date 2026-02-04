@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import { Sparkles, Users , TrendingUp, Zap, ArrowRight } from "lucide-react";
+import ichigoGif from "../assets/ichigo kurosaki bleach GIF.gif";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -48,7 +49,7 @@ const LandingPage = () => {
                 <div
                     className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
                     style={{
-                        backgroundImage: 'url(https://gifdb.com/images/high/anime-fighting-498-x-300-gif-5w32bx1wxprcx49h.gif)',
+                        backgroundImage: `url(${ichigoGif})`,
                         filter: 'brightness(0.5) contrast(1.2)',
                         backgroundSize: 'cover'
                     }}
